@@ -1,0 +1,2 @@
+augmentations:
+  ShiftScaleRotate: {shift_limitL 0, scale_limitL [-0.5,0.5], rotate_limit: 0, border_mode: 3, p: 1}
