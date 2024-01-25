@@ -3,4 +3,5 @@ split_info:
   train_split_file: train.txt 
   val_split_file: val.txt 
   test_type: folder 
-  test_img_dir: ../../data/
+  test_img_dir: ../../data/ferrite/test_images 
+  test_label_dir: None 
