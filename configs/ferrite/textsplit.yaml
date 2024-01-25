@@ -1,0 +1,6 @@
+split_info: 
+  type: TextSplit
+  train_split_file: train.txt
+  val_split_file: val.txt
+  test_type: TextSplit
+  test_split_file: test.txt
