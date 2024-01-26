@@ -1,49 +1,84 @@
-import numpy as np 
-import pandas as pd 
-import os 
-from os.path import splitext 
-from typing import Union, List 
-from PI import Image 
-from torch.utils import data 
-from troch.utils.data import DataLoader 
-import albumentations as A 
+import numpy as np
+import pandas as pd
+import os
+from os.path import splitext
+from typing import Union, List
+from PIL import Image
+from torch.utils import data
+from torch.utils.data import DataLoader
+import albumentations as A
 from albumentations.pytorch import ToTensorV2
 
+
 class DatasetTemplate(data.Dataset):
-  #Supports reading and transforming images and segmentation labels. Labels are pre-stored as numpy array with data type np.int8. 
-  def __init__(self, img_dir, label_dir, transform):
-    self.img_dir, self.label_dir = img_dir, label_dir 
-    self.img_names = []
-    self.transform = transform 
+    """A dataset template class that supports reading and transforming images
+    and segmentation labels. Labels are pre-stored as numpy array with data
+    type np.int8. Subclasses should implement how to get self.img_names.
+    """
+    def __init__(self, img_dir, label_dir, transform):
+        """
+        :param img_dir: the directory where the images are stored
+        :param label_dir: the directory where the labels are stored
+        :param transform: the albumentations transformation applied to image and
+        label
+        """
+        self.img_dir, self.label_dir = img_dir, label_dir
+        self.img_names = []
+        self.transform = transform
 
-  def __getitem__(self, index):
-    img_name = self.img_names[index]
-    img = self._get_image(img_name)
-    label = self._get_label(img_name)
-    img, label = self._transform(img, label)
-    return img, label, img_name 
+    def __getitem__(self, index):
+        img_name = self.img_names[index]
+        img = self._get_image(img_name)
+        label = self._get_label(img_name)
+        img, label = self._transform(img, label)
+        return img, label, img_name
 
-  def __len__(self):
-    return len(self.img_names)
+    def __len__(self):
+        return len(self.img_names)
 
-  def _get_image(self, img_name): 
-    base = img_name.rsplit('.', 1)[0]
-    label_dir = f'{self.label_dir}/{base}.npy'
-    img = transformed['image']
-    label = transformed['mask']
-    return img, label
+    def _get_image(self, img_name):
+        img_path = f'{self.img_dir}/{img_name}'
+        with open(img_path, 'rb') as f:
+            img = Image.open(f)
+            img = img.convert('RGB')
+        return img
+
+    def _get_label(self, img_name):
+        base = img_name.rsplit('.', 1)[0]
+        label_dir = f'{self.label_dir}/{base}.npy'
+        label = np.load(label_dir).astype(np.int8)
+        return label
+
+    def _transform(self, img, label):
+        img = np.array(img)
+        transformed = self.transform(image=img, mask=label)
+        img = transformed['image']
+        label = transformed['mask']
+        return img, label
 
 
 class CSVSplitDataset(DatasetTemplate):
-  def__init__(self,
-              img_dir: str,
-              label_dir: str, 
-              split_csv: str, 
-              split_num: Union[int, List[int]],
-              transform, 
-              split_col_name: str = "split",
-              reverse: bool = False):
-super().__init__(img_dir, label_dir, transform)
+    """A dataset class that reads a csv split file containing (name, split)
+    pairs to get the dataset consisting of images with or without the specified
+    split number(s).
+    """
+    def __init__(self,
+                 img_dir: str,
+                 label_dir: str,
+                 split_csv: str,
+                 split_num: Union[int, List[int]],
+                 transform,
+                 split_col_name: str = "split",
+                 reverse: bool = False):
+        """
+        :param split_csv: the path to the csv file that contains the split info
+        :param split_num: the split number(s) of the image
+        :param split_col_name: the name of the column in the csv file that
+        contains the split number, defaults to "split"
+        :param reverse: if True, the images without the split_num are selected,
+        defaults to False
+        """
+        super().__init__(img_dir, label_dir, transform)
         if isinstance(split_num, (int, np.int64)):
             split_num = [split_num]
         df = pd.read_csv(split_csv)
