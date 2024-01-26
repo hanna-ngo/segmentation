@@ -1,0 +1,8 @@
+split_info: 
+  type: TextSplit 
+  train_split_file: trainA.txt
+  val_split_file: validateA.txt
+  test_type: TextSplit
+  test_split_file: testA.txt
+
+n_epochs: 20
