@@ -98,7 +98,7 @@ class TextSplitDataset(DatasetTemplate):
         the images in the split
         """
         super().__init__(img_dir, label_dir, transform)
-        self.img_names = np.loadtxt(split_txt, dtype=str, delimiter='\n', ndmin=1)
+        self.img_names = np.loadtxt(split_txt, dtype=str, delimiter="\n", ndmin=1)
 
 
 class FolderDataset(DatasetTemplate):
@@ -109,7 +109,7 @@ class FolderDataset(DatasetTemplate):
     def __init__(self, img_dir, label_dir, transform):
         super().__init__(img_dir, label_dir, transform)
         self.img_names = [name for name in os.listdir(self.img_dir)
-                          if splitext(name)[1] in ['.tif', '.jpg', '.png']]
+                          if splitext(name)[1] in ['.tiff', '.jpg', '.png']]
         self.no_label = label_dir is None
 
     def __getitem__(self, index):
