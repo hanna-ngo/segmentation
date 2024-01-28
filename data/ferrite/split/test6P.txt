@@ -1,6 +1,0 @@
-primaryferrite_2Al_image6.tiff
-primaryferrite_2Al_image7.tiff
-primaryferrite_2Al_image8.tiff
-proeutectoidferrite_3Si_image5.tiff
-proeutectoidferrite_3Si_image6.tiff
-proeutectoidferrite_3Si_image7.tiff
