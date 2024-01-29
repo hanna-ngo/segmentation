@@ -145,6 +145,7 @@ def get_transform(args, is_train):
             A.RandomCrop(*args.train_size),
             *get_list_of_ops(args.augmentations, A),
             A.Normalize(mean=args.mean, std=args.std),
+            A.Compose(is_check_shapes=False),
             ToTensorV2()
         ])
     else:
