@@ -2,7 +2,7 @@
 dataset: ferrite
 img_folder: images
 label_folder: labels 
-n_classses: 2 #how many classes are the images in the dataset divided into 
+n_classes: 2 #how many classes are the images in the dataset divided into 
 
 #train, validation and test split 
 split_info:
