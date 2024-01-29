@@ -3,7 +3,6 @@ primaryferrite_2Al_image2.tiff
 primaryferrite_2Al_image3.tiff
 primaryferrite_2Al_image4.tiff
 primaryferrite_2Al_image5.tiff
-proeutectoidferrite_3Si_image.tiff
 proeutectoidferrite_3Si_image1.tiff
 proeutectoidferrite_3Si_image2.tiff
 proeutectoidferrite_3Si_image3.tiff
