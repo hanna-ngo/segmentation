@@ -10,7 +10,7 @@ import numpy as np
 class Arguments:
     def __init__(self):
         parser = ArgumentParser()
-        parser.add_argument("--dataset", default="uhcs")
+        parser.add_argument("--dataset", default="ferrite")
         parser.add_argument("--config", default="default.yaml")
         parser.add_argument("--gpu_id", type=int, default=0)
         parser.add_argument("--seed", type=int, default=42)
