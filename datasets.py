@@ -140,19 +140,20 @@ def get_transform(args, is_train):
     :param is_train: if the transform is for training or evaluating
     :return: transform operations to be performed on the image
     """
+    is_check_shapes = False "Line doesn't check for the difference in size of images" 
+
     if is_train:
         transform = A.Compose([
-            A.RandomCrop(*args.train_size),
+            A.RandomCrop(*args.train_size, always_apply=is_check_shapes),
             *get_list_of_ops(args.augmentations, A),
-            A.Normalize(mean=args.mean, std=args.std),
-            is_check_shapes=False,
-            ToTensorV2()
+            A.Normalize(mean=args.mean, std=args.std,always_apply=is_check_shapes),
+            ToTensorV2(always_apply=is_check_shapes)
         ])
     else:
         transform = A.Compose([
-            A.Resize(*args.eval_size),
-            A.Normalize(mean=args.mean, std=args.std),
-            ToTensorV2()
+            A.Resize(*args.eval_size, always_apply=is_check_shapes),
+            A.Normalize(mean=args.mean, std=args.std, always_apply=is_check_shapes),
+            ToTensorV2(always_apply=is_check_shapes)
         ])
     return transform
 
