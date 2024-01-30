@@ -140,7 +140,7 @@ def get_transform(args, is_train):
     :param is_train: if the transform is for training or evaluating
     :return: transform operations to be performed on the image
     """
-    is_check_shapes = False "Line doesn't check for the difference in size of images" 
+    is_check_shapes = False 
 
     if is_train:
         transform = A.Compose([
