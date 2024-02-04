@@ -19,8 +19,8 @@ cross_validations:
 
 #data information 
 #help standardizing the values and normalizing the image data before feeding it into the machine learning model 
-train_size: [224, 224] #pixels that the images in the training model is resized to 
-eval_size: [484, 645] #pixels that the images are evaluated images are resized to 
+train_size: [500, 500] #pixels that the images in the training model is resized to 
+eval_size: [500, 500] #pixels that the images are evaluated images are resized to 
 mean: [0.451, 0.447, 0.434] #mean values for RGB channels of the image dataset 
 std: [0.112, 0.120, 0.121] #standard deviation values for RGB channels of the image dataset 
 
