@@ -50,6 +50,7 @@ class DatasetTemplate(data.Dataset):
         return label
 
     def _transform(self, img, label):
+        img = np.array(img)
         transformed = self.transform(image=img, mask=label)
         img = transformed['image']
         label = transformed['mask']
