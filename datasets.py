@@ -30,7 +30,7 @@ class DatasetTemplate(data.Dataset):
         img_name = self.img_names[index]
         img = self._get_image(img_name)
         label = self._get_label(img_name)
-        img, label = self._transform(img, label)
+        img, label = self.transform(img, label)
         return img, label, img_name
 
     def __len__(self):
@@ -49,7 +49,7 @@ class DatasetTemplate(data.Dataset):
         label = np.load(label_dir).astype(np.int8)
         return label
 
-    def _transform(self, img, label):
+    def transform(self, img, label):
         img = np.array(img)
         transformed = transform(image=img, mask=label)
         img = transformed['image']
